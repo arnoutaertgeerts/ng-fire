@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('ngFire', [
+        .module('app', [
             'ngAnimate',
             'ngCookies',
             'ngTouch',
@@ -10,7 +10,10 @@
             'restangular',
             'ui.router',
 
-            //Modules
-            'main'
+            //Route Modules
+            'main',
+            
+            //Components
+            'authorization'
         ]);
 })();
