@@ -3,3 +3,6 @@ dist
 .tmp
 .sass-cache
 src/bower_components
+.DS_Store
+.editorconfig
+.idea/*
