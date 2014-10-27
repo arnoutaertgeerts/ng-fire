@@ -3,125 +3,62 @@
 
     angular
         .module('authorization')
-        .factory('Auth', Auth);
+        .factory('Auth', AuthFactory);
 
-    Auth.$inject = [
-        '$http',
-        '$cookieStore',
-        '$firebaseSimpleLogin'
-        'Access',
-        'User',
-        'toaster'
+    AuthFactory.$inject = [
+        '$rootScope',
+        '$firebaseSimpleLogin',
+        'Access'
     ];
 
-    function Auth($http, $cookieStore, $firebaseSimpleLogin, Access, User, toaster) {
+    function AuthFactory($rootScope, $firebaseSimpleLogin, Access) {
 
-        var ref = new Firebase("https://<your-firebase>.firebaseio.com/");
+        var ref = new Firebase('https://crackling-inferno-5506.firebaseio.com/');
         var auth = $firebaseSimpleLogin(ref);
-        
-        var currentUser = new User($cookieStore.get('user') || { name: '', roles: ['anon']});
-        
-        $cookieStore.remove('user');
 
-        function changeUser(user) {
-            angular.extend(currentUser, user);
-        }
-
-        var factory = {
+        var Auth = {
+            register: function (user) {
+                return auth.$createUser(user.email, user.password);
+            },
+            login: function (user) {
+                return auth.$login('password', user);
+            },
+            logout: function () {
+                auth.$logout();
+            },
+            resolveUser: function() {
+                return auth.$getCurrentUser();
+            },
+            signedIn: function() {
+                return !!Auth.user.provider;
+            },
             authorize: authorize,
-            getUser: getUser,
-            isLoggedIn: isLoggedIn,
-            register: register,
-            login: login,
-            logout: logout,
-            changePassword: changePassword,
-            user: currentUser
+            user: {}
         };
 
-        return factory;
+        $rootScope.$on('$firebaseSimpleLogin:login', function(e, user) {
+            console.log('logged in');
+            angular.copy(user, Auth.user);
+        });
+        $rootScope.$on('$firebaseSimpleLogin:logout', function() {
+            console.log('logged out');
+            angular.copy({}, Auth.user);
+        });
+
+        return Auth;
 
         function authorize(accessLevel, roles) {
             if (roles === undefined) {
-                roles = currentUser.roles;
+                roles = Auth.user.roles;
             }
 
             var authorizedRoles = Access[accessLevel];
-            return _.intersection(authorizedRoles, currentUser.roles).length > 0;
+            return _.intersection(authorizedRoles, Auth.user.roles).length > 0;
 
         }
 
-        function getUser(name) {
-            db.getUser(name).then(function (res) {
-                changeUser(new User(res));
-                
-            });
-        }
 
-        function isLoggedIn(user) {
-            if (user === undefined) {
-                user = currentUser;
-            }
 
-            return user.roles.indexOf("anon") === -1;
-        }
-
-        function register(user) {
-            user["type"] = "user";
-            user["_id"] = 'org.couchdb.user:' + user.name;
-
-            //Roles are set and overwritten server side to keep the app safe.
-            user["roles"] = "";
-
-            return $http.post('/signup', user).then(function (res) {
-                toaster.pop('success', 'Your account was created! Try logging in :)')
-            })
-        }
-
-        function checkMail(email) {
-            $http.post('/checkmail', {
-                email: email
-            }).then(function (res) {
-                return res;
-            }).catch(function (err) {
-                return err;
-            })
-        }
-
-        function login(name, password) {
-            return db.login(name, password).then(function (res) {
-                factory.getUser(name);
-            });
-        }
-
-        function logout(success, error) {
-            db.logout(currentUser.name).then(function () {
-                changeUser({
-                    name: '',
-                    email: '',
-                    roles: [
-                        'anon'
-                    ]
-                });
-                success();
-            }, function () {
-                error();
-            });
-        }
-
-        function changePassword(oldPassword, newPassword) {
-            //Check the old password of the current user by logging in again
-            var name = currentUser.name;
-
-            //Change the password to the new password
-            factory.login(name, oldPassword).then(function () {
-                currentUser.password = newPassword;
-                currentUser.$save().then(function () {
-                    factory.getUser(name);
-                });
-            }).catch(function (err) {
-                console.log(err);
-            });
-        }
     }
 
 })();
