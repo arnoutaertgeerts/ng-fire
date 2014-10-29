@@ -1,19 +1,55 @@
-<nav class="navbar navbar-static-top navbar-inverse" ng-controller="NavbarCtrl">
-  <div class="navbar-header">
-    <a class="navbar-brand" href="https://github.com/Swiip/generator-gulp-angular">
-      <span class="glyphicon glyphicon-home"></span> Gulp Angular
-    </a>
-  </div>
+<div class="container">
+    <div class="navbar navbar-default">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" ng-init="menuCollapsed = true"
+                    ng-click="menuCollapsed = ! menuCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-brand">
+                ngFire
+                <small>
+                    <a href="http://github.com/arnoutaertgeerts/ng-fire">
+                        Github
+                    </a>
+                </small>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse" collapse="menuCollapsed">
+            <ul class="nav navbar-nav">
+                <li ui-sref-active="active">
+                    <a href ui-sref="home">
+                        <i class="fa fa-home"></i>
+                        Home
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a href ui-sref="about">
+                        <i class="fa fa-info-circle"></i>
+                        What is it?
+                    </a>
+                </li>
+                <li access-level="user" ui-sref-active="active">
+                    <a href ui-sref="admin">
+                        <i class="fa fa-book"></i>
+                        Admin
+                    </a>
+                </li>
+                <li access-level="user" ui-sref-active="active">
+                    <a href ui-sref="user">
+                        <i class="fa fa-user"></i>
+                        Profile
+                    </a>
+                </li>
 
-  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
-    <ul class="nav navbar-nav">
-      <li class="active"><a ng-href="#">Home</a></li>
-      <li><a ng-href="#">About</a></li>
-      <li><a ng-href="#">Contact</a></li>
-    </ul>
 
-    <ul class="nav navbar-nav navbar-right">
-      <li>Current date: {{ date | date:'yyyy-MM-dd' }}</li>
-    </ul>
-  </div>
-</nav>
+                <li access-level="anon"><a href="/login">Log in</a></li>
+                <li access-level="anon"><a href="/register">Register</a></li>
+                <li access-level="user"><a href="/home" ng-click="vm.logout()">Log out</a></li>
+                <li access-level="user"><a><strong>{{ user.name }}</strong></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

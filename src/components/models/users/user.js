@@ -9,7 +9,7 @@
         '$firebase'
     ];
 
-    function User($firebase) {
+    function User() {
 
     }
 })();

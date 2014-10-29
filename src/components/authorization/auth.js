@@ -16,6 +16,7 @@
         var ref = new Firebase('https://crackling-inferno-5506.firebaseio.com/');
         var auth = $firebaseSimpleLogin(ref);
 
+
         var Auth = {
             register: function (user) {
                 return auth.$createUser(user.email, user.password);
@@ -29,11 +30,11 @@
             resolveUser: function() {
                 return auth.$getCurrentUser();
             },
-            signedIn: function() {
+            isLoggedIn: function() {
                 return !!Auth.user.provider;
             },
             authorize: authorize,
-            user: {}
+            user: {name: '', roles: ['anon']}
         };
 
         $rootScope.$on('$firebaseSimpleLogin:login', function(e, user) {
@@ -56,9 +57,6 @@
             return _.intersection(authorizedRoles, Auth.user.roles).length > 0;
 
         }
-
-
-
     }
 
 })();

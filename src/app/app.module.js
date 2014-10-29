@@ -12,6 +12,8 @@
 
             //Route Modules
             'main',
+            'login',
+            'register',
             
             //Components
             'authorization'

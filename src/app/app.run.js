@@ -20,14 +20,13 @@
 
 
         function checkAuth(event, toState) {
-
             if (!Auth.authorize(toState.data.access)) {
                 event.preventDefault();
 
                 if (Auth.isLoggedIn()) {
-                    $state.go('user.home');
-                } else {
                     $state.go('login');
+                } else {
+                    $state.go('home');
                 }
             }
         }
