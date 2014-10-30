@@ -6,7 +6,8 @@
             'ui.router',
             'authorization',
             'formFor',
-            'toaster'
+            'toaster',
+            'model.user'
         ]);
 
 })();

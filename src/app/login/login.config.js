@@ -14,7 +14,7 @@
                 'main': {
                     controller: 'LoginCtrl',
                     controllerAs: 'vm',
-                    templateUrl: 'login/login.tpl.html'
+                    templateUrl: 'app/login/login.html'
                 }
             },
             data: {

@@ -2,17 +2,17 @@
     'use strict';
 
     angular
-        .module('register')
+        .module('app')
         .service('UserSignUp', UserSignUp);
 
 
     UserSignUp.$inject = [];
 
     function UserSignUp() {
-        this.validationRules = {
+        var validationRules = {
             email: {
                 required: true,
-                pattern: /^\w+@\w+\.\w+$/ // Simple email format
+                pattern: /^\w+@\w+\.\w+$/
             },
             password: {
                 required: true,
@@ -20,7 +20,9 @@
             }
         };
 
-        return this;
+        return {
+            validationRules: validationRules
+        };
     }
 
 })();

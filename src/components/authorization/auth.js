@@ -21,8 +21,11 @@
             register: function (user) {
                 return auth.$createUser(user.email, user.password);
             },
-            login: function (user) {
-                return auth.$login('password', user);
+            login: function (email, password) {
+                return auth.$login('password', {
+                    email: email,
+                    password: password
+                });
             },
             logout: function () {
                 auth.$logout();
@@ -43,7 +46,7 @@
         });
         $rootScope.$on('$firebaseSimpleLogin:logout', function() {
             console.log('logged out');
-            angular.copy({}, Auth.user);
+            angular.copy({name: '', roles: ['anon']}, Auth.user);
         });
 
         return Auth;
@@ -54,7 +57,7 @@
             }
 
             var authorizedRoles = Access[accessLevel];
-            return _.intersection(authorizedRoles, Auth.user.roles).length > 0;
+            return  _.intersection(authorizedRoles, roles).length > 0;
 
         }
     }

@@ -19,36 +19,52 @@
         </div>
         <div class="collapse navbar-collapse" collapse="menuCollapsed">
             <ul class="nav navbar-nav">
-                <li ui-sref-active="active">
+                <li access-level="public" ui-sref-active-eq="active">
                     <a href ui-sref="home">
                         <i class="fa fa-home"></i>
                         Home
                     </a>
                 </li>
-                <li ui-sref-active="active">
+
+                <li access-level="public" ui-sref-active-eq="active">
                     <a href ui-sref="about">
                         <i class="fa fa-info-circle"></i>
                         What is it?
                     </a>
                 </li>
-                <li access-level="user" ui-sref-active="active">
+
+                <li access-level="user" ui-sref-active-eq="active">
                     <a href ui-sref="admin">
                         <i class="fa fa-book"></i>
                         Admin
                     </a>
                 </li>
-                <li access-level="user" ui-sref-active="active">
+
+                <li access-level="user" ui-sref-active-eq="active">
                     <a href ui-sref="user">
                         <i class="fa fa-user"></i>
                         Profile
                     </a>
                 </li>
 
+                <li access-level="anon" ui-sref-active-eq="active">
+                    <a href ui-sref="login">
+                        Log in
+                    </a>
+                </li>
 
-                <li access-level="anon"><a href="/login">Log in</a></li>
-                <li access-level="anon"><a href="/register">Register</a></li>
-                <li access-level="user"><a href="/home" ng-click="vm.logout()">Log out</a></li>
-                <li access-level="user"><a><strong>{{ user.name }}</strong></a></li>
+                <li access-level="anon" ui-sref-active-eq="active">
+                    <a href ui-sref="register">
+                        Register
+                    </a>
+                </li>
+
+                <li access-level="user" ui-sref-active-eq="active">
+                    <a href ui-sref="home" ng-click="vm.logout()">
+                        Log out
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>

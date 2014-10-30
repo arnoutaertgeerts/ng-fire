@@ -14,7 +14,7 @@
                 'main': {
                     controller: 'RegisterCtrl',
                     controllerAs: 'vm',
-                    templateUrl: 'register/register.tpl.html'
+                    templateUrl: 'app/register/register.html'
                 }
             },
             data: {
@@ -23,5 +23,4 @@
             }
         });
     }
-
 })();

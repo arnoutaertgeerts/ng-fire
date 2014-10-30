@@ -6,17 +6,16 @@
         .controller('RegisterCtrl', RegisterCtrl);
 
     RegisterCtrl.$inject = [
-        '$rootScope',
-        '$scope',
         '$location',
         'Auth',
         'toaster'
     ];
 
-    function RegisterCtrl($rootScope, $scope, $location, Auth, toaster) {
+    function RegisterCtrl($location, Auth, toaster) {
         var vm = this;
 
         vm.submit = submit;
+        vm.user = {};
 
 
         function submit(data) {

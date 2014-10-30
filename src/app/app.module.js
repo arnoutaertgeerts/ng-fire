@@ -9,6 +9,8 @@
             'ngSanitize',
             'restangular',
             'ui.router',
+            'formFor',
+            'formFor.bootstrapTemplates',
 
             //Route Modules
             'main',

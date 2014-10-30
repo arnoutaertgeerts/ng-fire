@@ -18,7 +18,7 @@
         vm.login = login;
 
         function login() {
-            Auth.login(vm.name, vm.password).then(function () {
+            Auth.login(vm.email, vm.password).then(function () {
                 $location.path('/home');
                 toaster.pop('success', 'Login successful!', 'Welcome ' + vm.name);
 
