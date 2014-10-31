@@ -8,18 +8,25 @@
     AuthFactory.$inject = [
         '$rootScope',
         '$firebaseSimpleLogin',
-        'Access'
+        'Access',
+        'User',
+        'FIREBASE_URL'
     ];
 
-    function AuthFactory($rootScope, $firebaseSimpleLogin, Access) {
+    function AuthFactory($rootScope, $firebaseSimpleLogin, Access, User, FIREBASE_URL) {
 
-        var ref = new Firebase('https://crackling-inferno-5506.firebaseio.com/');
+        var ref = new Firebase(FIREBASE_URL);
         var auth = $firebaseSimpleLogin(ref);
-
 
         var Auth = {
             register: function (user) {
-                return auth.$createUser(user.email, user.password);
+                return auth.$createUser(user.email, user.password).then(function(res) {
+                    user.uid = res.uid;
+                    user.roles = ['user'];
+                    new User(user).$save();
+                }).then(function() {
+                    return Auth.login(user.email, user.password);
+                });
             },
             login: function (email, password) {
                 return auth.$login('password', {
@@ -40,8 +47,10 @@
             user: {name: '', roles: ['anon']}
         };
 
-        $rootScope.$on('$firebaseSimpleLogin:login', function(e, user) {
-            console.log('logged in');
+        $rootScope.$on('$firebaseSimpleLogin:login', function(e, res) {
+            console.log('logged in');            
+            var user = new User(res);
+            
             angular.copy(user, Auth.user);
         });
         $rootScope.$on('$firebaseSimpleLogin:logout', function() {

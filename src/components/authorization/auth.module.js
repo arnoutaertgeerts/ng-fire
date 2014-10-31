@@ -4,6 +4,7 @@
     angular
         .module('authorization',  [
             'firebase',
-            'toaster'
+            'toaster',
+            'model.user'
         ]);
 })();
