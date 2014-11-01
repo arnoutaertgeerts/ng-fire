@@ -20,7 +20,7 @@
         function login() {
             Auth.login(vm.email, vm.password).then(function () {
                 $location.path('/home');
-                toaster.pop('success', 'Login successful!', 'Welcome ' + vm.name);
+                toaster.pop('success', 'Login successful!', 'Welcome ' + vm.email);
 
             }).catch(function () {
                 toaster.pop('error', 'Login failed', 'Incorrect username or password, please try again!');

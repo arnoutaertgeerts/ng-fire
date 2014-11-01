@@ -7,10 +7,11 @@
         .factory('User', User);
 
     UserFactory.$inject = [        
-        '$FirebaseObject',        
+        '$FirebaseObject'
     ];
 
     function UserFactory($FirebaseObject) {
+
         return $FirebaseObject.$extendFactory({
             getFullName: getFullName
         });
@@ -29,7 +30,11 @@
     function User($firebase, FIREBASE_URL) {
         var ref = new Firebase(FIREBASE_URL + '/users/');
         return function(user) {
-            return $firebase(ref.child(user.uid), {objectFactory: 'UserFactory'}).$asObject();
+
+            var userModel = $firebase(ref.child(user.uid), {objectFactory: 'UserFactory'}).$asObject();
+            angular.extend(userModel, user);
+
+            return userModel;
         };
     }
     

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-controller="NavBarCtrl">
     <div class="navbar navbar-default">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" ng-init="menuCollapsed = true"
@@ -60,7 +60,7 @@
                 </li>
 
                 <li access-level="user" ui-sref-active-eq="active">
-                    <a href ui-sref="home" ng-click="vm.logout()">
+                    <a href ui-sref="logout" ng-click="logout()">
                         Log out
                     </a>
                 </li>

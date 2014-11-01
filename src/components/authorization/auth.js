@@ -20,12 +20,21 @@
 
         var Auth = {
             register: function (user) {
-                return auth.$createUser(user.email, user.password).then(function(res) {
+                var password = user.password;
+
+                return auth.$createUser(user.email, password).then(function(res) {
+
+                    //Remove the password from the users object
+                    user.password = null;
+
                     user.uid = res.uid;
                     user.roles = ['user'];
-                    new User(user).$save();
+
+                    var newUser = new User(user);
+                    return newUser.$save();
+
                 }).then(function() {
-                    return Auth.login(user.email, user.password);
+                    return Auth.login(user.email, password);
                 });
             },
             login: function (email, password) {
@@ -50,8 +59,11 @@
         $rootScope.$on('$firebaseSimpleLogin:login', function(e, res) {
             console.log('logged in');            
             var user = new User(res);
-            
-            angular.copy(user, Auth.user);
+
+            //Wait for the user to load
+            user.$loaded().then(function() {
+                angular.copy(user, Auth.user);
+            });
         });
         $rootScope.$on('$firebaseSimpleLogin:logout', function() {
             console.log('logged out');
