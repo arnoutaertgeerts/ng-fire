@@ -9,6 +9,7 @@
             'ngSanitize',
             'restangular',
             'ui.router',
+            'ui.bootstrap',
             'formFor',
             'formFor.bootstrapTemplates',
 
@@ -16,6 +17,7 @@
             'main',
             'login',
             'register',
+            'about',
             
             //Components
             'authorization'

@@ -31,7 +31,7 @@
     your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container" ng-include="'components/navbar/navbar.html'"></div>
 <div class="container" ui-view="main"></div>
 <toaster-container></toaster-container>
 
@@ -75,6 +75,8 @@
 <!-- endbuild -->
 
 <script src="bower_components/angular-form-for/dist/form-for.bootstrap-templates.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
 <!-- build:js({src,.tmp}) scripts/main.js -->
 
@@ -95,6 +97,10 @@
 <script src="app/register/register.module.js"></script>
 <script src="app/register/register.config.js"></script>
 <script src="app/register/register.js"></script>
+
+<script src="app/about/about.module.js"></script>
+<script src="app/about/about.config.js"></script>
+<script src="app/about/about.js"></script>
 
 <script src="components/navbar/navbar.controller.js"></script>
 
